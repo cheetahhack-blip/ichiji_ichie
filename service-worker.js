@@ -1,4 +1,4 @@
-const CACHE_NAME = "ichiji_ichie_cache_v0.1.2"; // APP_VERSIONと揃えると管理が楽
+const CACHE_NAME = "ichiji_ichie_cache_v0.1.3"; // APP_VERSIONと揃えると管理が楽
 
 const ASSETS = [
   "./",

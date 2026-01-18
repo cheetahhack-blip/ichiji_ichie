@@ -276,3 +276,39 @@ select, input {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
   font-size: 13px;
 }
+
+/* === Mobile fit: 五十音表が初期表示で横に収まるように縮小 === */
+@media (max-width: 480px) {
+  /* 全体の余白も少し削る */
+  .main { padding: 10px; gap: 10px; }
+  .board, .keyboard { padding: 10px; }
+
+  /* キー・マスのサイズを小さく */
+  .key {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    font-size: 14px;
+  }
+
+  .kbdGrid {
+    /* 10列分を縮小して収める */
+    grid-template-columns: repeat(10, 34px);
+    gap: 6px;
+  }
+
+  /* （任意）盤面のマスも少し小さくして、横の圧迫を減らす */
+  .cell {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+
+  .cells { gap: 6px; }
+
+  /* 横スクロールの操作性を少し上げる */
+  .kbdGridWrap, .cellsWrap {
+    -webkit-overflow-scrolling: touch;
+  }
+}

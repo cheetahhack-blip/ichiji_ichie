@@ -10,7 +10,7 @@
 
   const DICT_VERSION = "2026-01-18_v4";
 
-  const APP_VERSION = "0.1.0"; // ←更新したらここを上げる（PWAの更新にも使う）
+  const APP_VERSION = "0.1.3"; // ←更新したらここを上げる（PWAの更新にも使う）
 
   // Licenses
   const licensesBtn = document.getElementById("licensesBtn");
