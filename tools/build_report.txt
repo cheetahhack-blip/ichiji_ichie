@@ -1,0 +1,12 @@
+=== build_base report ===
+inputs: dict_raw\jmdict_readings.txt, dict_raw\jmnedict_readings.txt
+mode: plain col: 0 sep: auto
+deny: dict\deny_words.txt (loaded 0)
+seen: 655981
+accepted(unique): 399231
+
+rejected breakdown:
+  dup_char: 163980
+  bad_length: 37782
+  bad_charset: 18152
+  bad_start: 49

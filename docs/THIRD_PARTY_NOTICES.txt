@@ -1,0 +1,19 @@
+Third-Party Notices
+
+This application includes dictionary data derived from:
+- JMdict / JMnedict (EDRDG Electronic Dictionary Research and Development Group)
+
+License:
+- Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+  https://creativecommons.org/licenses/by-sa/4.0/
+
+Attribution:
+- Dictionary files are provided by EDRDG under CC BY-SA 4.0.
+  https://www.edrdg.org/edrdg/licence.html
+
+Modifications:
+- This app extracts and uses Japanese readings (kana) from the original files.
+- Entries are filtered (e.g., length limits, disallowed starting characters, duplicate-character removal).
+
+Download date:
+- 2026-01-18

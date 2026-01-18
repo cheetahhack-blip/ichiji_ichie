@@ -1,0 +1,278 @@
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: #e7f1f4;
+  color: #1d2a33;
+}
+
+button, select, input { font: inherit; }
+
+button {
+  background: #ffffff;
+  border: 1px solid #c8d7dd;
+  color: #1d2a33;
+  padding: 8px 10px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+button:hover { filter: brightness(0.98); }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+select, input {
+  background: #ffffff;
+  color: #1d2a33;
+  border: 1px solid #c8d7dd;
+  border-radius: 12px;
+  padding: 8px 10px;
+}
+
+.ghost { background: transparent; }
+.btnPrimary {
+  background: #4fb3bd;
+  border-color: #3aa0aa;
+  color: #ffffff;
+}
+
+.muted { opacity: 0.75; }
+.warn { color: #7a1f1f; }
+
+.screen { min-height: 100vh; display: grid; place-items: center; padding: 18px; }
+.hidden { display: none; }
+
+/* タイトル画面 */
+.titleCard {
+  width: min(720px, calc(100vw - 24px));
+  background: #ffffff;
+  border: 1px solid #c8d7dd;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+}
+.titleLogo { font-size: 30px; font-weight: 800; letter-spacing: 2px; }
+.titleSub { margin-top: 6px; }
+.titleControls { margin-top: 16px; display: grid; gap: 12px; }
+.field { display: grid; gap: 6px; }
+.titleStats { display: flex; gap: 14px; flex-wrap: wrap; }
+
+/* プレイ画面 */
+.top {
+  width: 100%;
+  padding: 14px;
+  border-bottom: 1px solid #c8d7dd;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(6px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.topRow { display: flex; justify-content: space-between; gap: 10px; align-items: center; flex-wrap: wrap; }
+.topLeft { display: grid; gap: 2px; }
+.h1 { font-size: 18px; font-weight: 800; }
+.topRight { display: flex; gap: 8px; flex-wrap: wrap; }
+.statusRow { display: flex; gap: 14px; margin-top: 10px; flex-wrap: wrap; }
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  padding: 14px;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+/* 広いときだけ右に五十音、狭いときは下 */
+@media (min-width: 1150px) {
+  .main { grid-template-columns: 1.18fr 0.82fr; align-items: start; }
+}
+
+.board, .keyboard {
+  background: #ffffff;
+  border: 1px solid #c8d7dd;
+  border-radius: 18px;
+  padding: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.boardHead { display: grid; gap: 10px; margin-bottom: 10px; }
+
+.directBar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.directBar input { flex: 1; min-width: 220px; }
+
+.directPick { display: flex; gap: 6px; align-items: center; }
+.directPick select { width: 74px; }
+
+.rows { display: grid; gap: 8px; }
+
+/* 行：インデックス / マス列 / 右側操作 */
+.row {
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 16px;
+  border: 1px solid #d6e3e8;
+  background: #f8fcfd;
+}
+.row.selected { outline: 3px solid rgba(58,160,194,0.45); }
+
+.rowIndex { font-weight: 800; text-align: center; }
+
+/* マス列は必ず横一列、足りないときは横スクロール */
+.cellsWrap { overflow-x: auto; }
+.cells {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.cell {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: #ffffff;
+  border: 2px solid #cfe0e6;
+  font-size: 18px;
+  font-weight: 700;
+  flex: 0 0 auto;
+}
+.cell.empty { opacity: 0.35; }
+
+.controls {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.smallBtn { padding: 8px 10px; border-radius: 12px; min-width: 44px; }
+
+.tag {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid #c8d7dd;
+  background: #ffffff;
+  white-space: nowrap;
+}
+.tag.alert {
+  background: #fff1f1;
+  border-color: #f0b4b4;
+  color: #7a1f1f;
+}
+
+/* 赤（重複/辞書なし）と緑（OK） */
+.row.ok { background: #e3f6df; border-color: #bfe8b6; }
+.row.err { background: #ffe8e8; border-color: #f0b4b4; }
+
+.kbdHead { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+.kbdBlock { margin-top: 10px; }
+.kbdTitle { font-weight: 800; margin-bottom: 8px; }
+
+/* 五十音表（縦に母音） */
+.kbdGridWrap { overflow-x: auto; }
+.kbdGrid {
+  display: grid;
+  grid-auto-flow: row;
+  gap: 8px;
+  /* 10列（あ か さ た な は ま や ら わ） */
+  grid-template-columns: repeat(10, 44px);
+  align-content: start;
+  width: max-content;
+  padding-bottom: 4px;
+}
+
+.key {
+  width: 44px;
+  height: 40px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: #7cc9cf;
+  border: 1px solid #66b7be;
+  color: #0b2a2e;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 700;
+}
+.key:hover { filter: brightness(0.98); }
+.key.used { opacity: 0.45; }
+.key.rowdup { outline: 3px solid rgba(240,180,180,0.85); }
+.key.blank {
+  background: transparent;
+  border: 1px dashed #c8d7dd;
+  color: transparent;
+  cursor: default;
+}
+
+.backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 40; }
+.modal {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(720px, calc(100vw - 24px));
+  background: #ffffff;
+  border: 1px solid #c8d7dd;
+  border-radius: 18px;
+  padding: 12px;
+  z-index: 50;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+}
+.modalHead { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.modalTitle { font-weight: 900; }
+.modalBody { margin-top: 10px; display: grid; gap: 10px; }
+.myDictAdd { display: flex; gap: 8px; flex-wrap: wrap; }
+.myDictAdd input { flex: 1; min-width: 220px; }
+.myDictList { margin: 0; padding-left: 18px; }
+.myDictList li {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #e1edf1;
+}
+
+.clearBig {
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  padding: 12px 0 6px;
+  text-align: center;
+  background: linear-gradient(90deg, #4fb3bd, #8bd6a6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.clearButtons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.licText {
+  margin: 0;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid #e1edf1;
+  background: #f8fcfd;
+  max-height: min(70vh, 520px);
+  overflow: auto;
+  white-space: pre-wrap;
+  line-height: 1.5;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+}
