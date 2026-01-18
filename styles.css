@@ -112,10 +112,10 @@ select, input {
 /* 行：インデックス / マス列 / 右側操作 */
 .row {
   display: grid;
-  grid-template-columns: 44px 1fr auto;
-  gap: 10px;
+  grid-template-columns: 44px 1fr; /* ← auto列を消す */
+  gap: 8px;
   align-items: center;
-  padding: 8px 10px;
+  padding: 6px 8px;              /* 少し詰める */
   border-radius: 16px;
   border: 1px solid #d6e3e8;
   background: #f8fcfd;
@@ -148,23 +148,6 @@ select, input {
 }
 .cell.empty { opacity: 0.35; }
 
-.controls {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-  flex-wrap: nowrap;
-}
-
-.smallBtn { padding: 8px 10px; border-radius: 12px; min-width: 44px; }
-
-.tag {
-  font-size: 12px;
-  padding: 4px 8px;
-  border-radius: 999px;
-  border: 1px solid #c8d7dd;
-  background: #ffffff;
-  white-space: nowrap;
-}
 .tag.alert {
   background: #fff1f1;
   border-color: #f0b4b4;

@@ -64,24 +64,22 @@
         <div>ベスト：<span id="bestTime2">--</span></div>
         <div id="dictStatus2" class="muted">辞書：読込中…</div>
       </div>
+      
+      <div class="muted">行をクリック → ひらがなで入力 → 行ごとに判定</div>
+
+      <div class="directBar">
+        <select id="directRowSelect"></select>
+        <input id="directInput" type="text" placeholder="選択行を直接入力" />
+        <button id="directBackspace" class="smallBtn">⌫</button>
+        <button id="directClear" class="smallBtn">✖</button>
+        <button id="directJudge" class="btnPrimary">判定</button>
+      </div>
+
     </header>
 
     <main class="main">
       <section class="board">
-        <div class="boardHead">
-          <div class="muted">行をクリックして選択 → ひらがなで入力 → 行ごとに判定</div>
-
-          <div class="directBar">
-              <select id="directRowSelect"></select>
-              <input id="directInput" type="text" placeholder="選択行を直接入力（例：ばすてぃーゆ）" />
-              <button id="directBackspace" class="smallBtn">⌫</button>
-              <button id="directClear" class="smallBtn">✖</button>
-              <button id="directJudge" class="btnPrimary">判定</button>
-          </div>
-
-          <div id="globalWarn" class="muted"></div>
-        </div>
-
+        <div class="boardHead"></div>
         <div id="rows" class="rows"></div>
       </section>
 

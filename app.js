@@ -110,7 +110,6 @@
   const bestTime2 = document.getElementById("bestTime2");
   const dictStatus2 = document.getElementById("dictStatus2");
   const rowsEl = document.getElementById("rows");
-  const globalWarnEl = document.getElementById("globalWarn");
 
   const clearBackdrop = document.getElementById("clearBackdrop");
   const clearModal = document.getElementById("clearModal");
@@ -508,29 +507,27 @@
       const word = rowText(i);
 
       const first = r.cells[0] || "";
-        const badStart = first && isBadStartChar(first);
+      const badStart = first && isBadStartChar(first);
 
-      // 行DOM
       const row = document.createElement("div");
       row.className = "row";
       if (i === selectedRow) row.classList.add("selected");
 
-      // 赤条件（語頭不可 / 同一行重複 / 他行重複 / 辞書NG）
+      // 赤条件：語頭不可 / 同一行重複 / 他行重複 / 辞書NG
       const isErr = badStart || dup || cross || (r.judged === "ng" && word);
       if (isErr) row.classList.add("err");
       else if (r.judged === "ok") row.classList.add("ok");
 
-      // 左：行番号
       const idx = document.createElement("div");
       idx.className = "rowIndex";
       idx.textContent = String(i + 1);
 
-      // 中：マス
       const wrap = document.createElement("div");
       wrap.className = "cellsWrap";
 
       const cells = document.createElement("div");
       cells.className = "cells";
+
       for (const ch of r.cells) {
         const c = document.createElement("div");
         c.className = "cell";
@@ -538,69 +535,11 @@
         c.textContent = ch || " ";
         cells.appendChild(c);
       }
+
       wrap.appendChild(cells);
-
-      // 右：操作
-      const controls = document.createElement("div");
-      controls.className = "controls";
-
-      // ★ここで tag を必ず作る（これが無いと落ちる）
-      const tag = document.createElement("span");
-      tag.className = "tag";
-
-      if (badStart) {
-        tag.textContent = "語頭不可";
-        tag.classList.add("alert");
-      } else if (dup) {
-        tag.textContent = "同一行重複";
-        tag.classList.add("alert");
-      } else if (cross) {
-        tag.textContent = "他行と重複";
-        tag.classList.add("alert");
-      } else if (r.judged === "ng" && word) {
-        tag.textContent = "辞書にない";
-        tag.classList.add("alert");
-      } else {
-        tag.textContent = " ";
-        tag.style.borderColor = "transparent";
-        tag.style.background = "transparent";
-      }
-
-      const delBtn = document.createElement("button");
-      delBtn.className = "smallBtn";
-      delBtn.textContent = "⌫";
-      delBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        setSelectedRow(i);
-        backspaceSelected();
-      });
-
-      const clrBtn = document.createElement("button");
-      clrBtn.className = "smallBtn";
-      clrBtn.textContent = "✖";
-      clrBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        setSelectedRow(i);
-        clearSelected();
-      });
-
-      const judgeBtn = document.createElement("button");
-      judgeBtn.className = "btnPrimary";
-      judgeBtn.textContent = "判定";
-      judgeBtn.disabled = !canJudgeRow(i, counts);
-      judgeBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        judgeRow(i);
-      });
-
-      controls.appendChild(tag);
-      controls.appendChild(delBtn);
-      controls.appendChild(clrBtn);
-      controls.appendChild(judgeBtn);
 
       row.appendChild(idx);
       row.appendChild(wrap);
-      row.appendChild(controls);
 
       row.addEventListener("click", () => setSelectedRow(i));
 
@@ -663,27 +602,10 @@
     renderKanaGrid(kbdOtherEl, OTHER_COLS, OTHER, counts, dupSet);
   }
 
-  function renderGlobalWarn() {
-    const counts = globalCharCount();
-
-    let used = 0;
-    for (const [, v] of counts) if (v >= 1) used++;
-
-    let crossRows = 0;
-    for (let i = 0; i < activeRowCount; i++) {
-      if (rowHasCrossDup(i, counts)) crossRows++;
-    }
-
-    globalWarnEl.textContent = (crossRows > 0)
-      ? `使用済み ${used}字／他行重複の行 ${crossRows}（判定不可）`
-      : `使用済み ${used}字`;
-  }
-
   function renderAll() {
     modeLabel.textContent = mode;
     renderRows();
     renderKeyboard();
-    renderGlobalWarn();
   }
 
   // ---- モーダル ----
